@@ -7,4 +7,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'taxas-enjoei';
+  checked = false;
+  color = 'grey';
+
+  toogleEnjoeiPro(this: any) {
+    if (this.checked === true) {
+      this.checked = false;
+      this.color = 'grey';
+    } else {
+      this.checked = true;
+      this.color = 'primary';
+    }
+  }
 }
