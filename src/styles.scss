@@ -1,15 +1,28 @@
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
 
+
 body {
-  margin: 0px;
+  margin: 0;
+  font-family: Arial;
 }
 
 .container {
-  margin: 8px;
+  min-height: calc(100vh - 114px);
+  padding: 8px 8px 0 8px;
+}
+
+@media (max-width: 599px) {
+  .container {
+    min-height: calc(100vh - 106px);
+    padding: 8px 8px 0 8px;
+  }
+}
+
+.info-text {
+  text-align: center;
 }
 
 .price-card {
-  // max-width: 400px;
   min-width: 90%;
   text-align: center;
 }
@@ -28,4 +41,28 @@ body {
   font-size: 11px;
 }
 
+.commission-text {
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 10px;
+}
 
+.disclaimer {
+  height: 50px;
+  line-height: 20px;
+  padding: 0 20px;
+  background: #e91e63;
+  text-align: center;
+}
+
+.disclaimer a {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.disclaimer a:hover {
+  color: #e91e63;
+}
+
+.toggle-enjoei-pro {
+  margin-left: 30px;
+}

@@ -3,16 +3,22 @@
 </mat-toolbar>
 
 <div class="container">
-  <div>
-    <mat-form-field class="example-full-width">
-      <input matInput color="accent" placeholder="Preço do Produto" [(ngModel)]="price">
-    </mat-form-field>
-
-    <mat-slide-toggle class="example-margin" color="primary" [(ngModel)]="enjoeiPro">
-      Enjoei Pro
-    </mat-slide-toggle>
-    <button mat-raised-button color="primary" (click)="calculateTaxes(this.price)">Calcular</button>
-  </div>
+  <mat-grid-list cols="1" rowHeight="65px">
+    <mat-grid-tile class="info-text">
+      Descubra o quanto você vai pagar de taxas para o Enjoei
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field>
+        <input matInput color="accent" placeholder="Preço do Produto" [(ngModel)]="price" type="number">
+      </mat-form-field>
+      <mat-slide-toggle class="toggle-enjoei-pro" color="primary" [(ngModel)]="enjoeiPro">
+        Enjoei Pro
+      </mat-slide-toggle>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-raised-button color="primary" (click)="calculateTaxes(this.price)">Calcular</button>
+    </mat-grid-tile>
+  </mat-grid-list>
 
   <mat-grid-list cols="2" rowHeight="150px">
     <mat-grid-tile>
@@ -46,8 +52,38 @@
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
-  <p>
-    A comissão do produto + taxa representa 20% do valor do produto.
-  </p>
+  <div class="commission-text">
+    {{commission}}% de comissão do produto ({{ commissionPrice | currency:'BRL'}}) + tarifa de
+    {{flatRate | currency:'BRL'}}.
+  </div>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Mais informações
+        </mat-panel-title>
+        <mat-panel-description>
+            Veja outras tarifas
+          </mat-panel-description>
+      </mat-expansion-panel-header>
 
+      Tarifas
+      <mat-list role="list">
+        <mat-list-item role="listitem">
+          <h4 mat-line>Saque: R$ 1,50</h4>
+          <p mat-line>(para saques menores que R$ 200)</p>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <h4 mat-line>Manutenção: R$ 9,99 mensal</h4>
+          <p mat-line>(somente para contas com saldo)</p>
+          <p mat-line>(e sem movimentação há mais de 6 meses)</p>
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>
+
+<footer class="disclaimer">
+  Os cálculos foram feitos com base na <a href="https://www.enjoei.com.br/taxas" target="_blank">tabela de taxas</a> do
+  site Enjoei.
+</footer>

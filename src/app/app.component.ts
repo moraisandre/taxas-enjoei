@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -9,30 +9,47 @@ import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 export class AppComponent {
   enjoeiPro = false;
 
-  price = 0;
+  price: number;
   profit = 0;
   tax = 0;
   percentProfit = 0;
   percentTax = 0;
+  commission = 0;
+  commissionPrice = 0;
+  flatRate = 0;
+
+  constructor(private _snackBar: MatSnackBar) {}
 
   calculateTaxes(value: number) {
-    let commission = 0;
-    let flatRate = 0;
-
-    console.log(this.enjoeiPro);
-
-    if (this.enjoeiPro) {
-      commission = 50;
-      flatRate = this.getFlatRatePro(value);
-    } else {
-      commission = value <= 100 ? 18.5 : 20;
-      flatRate = this.getFlatRate(value);
+    if (!this.price) {
+      this._snackBar.open('Por favor, preencher o preço do produto.', null, {
+        duration: 2000,
+      });
+      return;
     }
 
-    this.profit = value - (value * commission / 100) - flatRate;
-    this.tax = (value * commission / 100) + flatRate;
+    if (this.price < 9) {
+      this._snackBar.open('O valor tem que ser igual ou maior que 9 reais.', null, {
+        duration: 2000,
+      });
+      return;
+    }
+
+    if (this.enjoeiPro) {
+      this.commission = 50;
+      this.flatRate = this.getFlatRatePro(value);
+    } else {
+      this.commission = value <= 100 ? 18.5 : 20;
+      this.flatRate = this.getFlatRate(value);
+    }
+
+    this.profit = value - (value * this.commission) / 100 - this.flatRate;
+    this.tax = (value * this.commission) / 100 + this.flatRate;
     this.percentProfit = this.profit / value;
     this.percentTax = this.tax / value;
+    this.commissionPrice = this.getCommissionPrice();
+
+    this.errorMessage = '';
   }
 
   getFlatRate(value: number): number {
@@ -62,6 +79,14 @@ export class AppComponent {
       return 7.5;
     } else if (value > 200 && value <= 1500) {
       return 13;
+    }
+
+    return 0;
+  }
+
+  getCommissionPrice(): number {
+    if (this.commission !== 0) {
+      return this.price * (this.commission / 100);
     }
 
     return 0;

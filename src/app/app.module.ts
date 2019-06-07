@@ -11,7 +11,10 @@ import {
   MatIconModule,
   MatSlideToggleModule,
   MatCardModule,
-  MatGridListModule
+  MatGridListModule,
+  MatSnackBarModule,
+  MatExpansionModule,
+  MatListModule
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
@@ -29,7 +32,10 @@ import { FormsModule } from '@angular/forms';
     MatIconModule,
     MatSlideToggleModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    MatSnackBarModule,
+    MatExpansionModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
