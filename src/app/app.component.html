@@ -4,30 +4,50 @@
 
 <div class="container">
   <div>
-    <form class="price-form">
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Preço do Produto">
-      </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput color="accent" placeholder="Preço do Produto" [(ngModel)]="price">
+    </mat-form-field>
 
-      <mat-slide-toggle class="example-margin" [color]="color" [checked]="checked" (change)="toogleEnjoeiPro(this)">
-        Enjoei Pro
-      </mat-slide-toggle>
-    </form>
+    <mat-slide-toggle class="example-margin" color="primary" [(ngModel)]="enjoeiPro">
+      Enjoei Pro
+    </mat-slide-toggle>
+    <button mat-raised-button color="primary" (click)="calculateTaxes(this.price)">Calcular</button>
   </div>
-  <div>
-    <mat-card>
-      <mat-card-content>
-        <div>
-          Você vai ficar com
-        </div>
-        <div>
-          R$ 20,00
-        </div>
-        <p>
-          A comissão do produto + taxa representa 20% do valor do produto.
-        </p>
-      </mat-card-content>
-    </mat-card>
 
-  </div>
+  <mat-grid-list cols="2" rowHeight="150px">
+    <mat-grid-tile>
+      <mat-card class="price-card">
+        <mat-card-content>
+          <div class="price-header">
+            Você lucrou
+          </div>
+          <div class="price">
+            {{profit | currency:'BRL'}}
+          </div>
+          <div class="price-footer">
+            {{percentProfit | percent:'2.2'}} do valor total
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card class="price-card">
+        <mat-card-content>
+          <div class="price-header">
+            Taxa Enjoei
+          </div>
+          <div class="price">
+            {{tax | currency:'BRL'}}
+          </div>
+          <div class="price-footer">
+            {{percentTax | percent:'2.2'}} do valor total
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <p>
+    A comissão do produto + taxa representa 20% do valor do produto.
+  </p>
+
 </div>

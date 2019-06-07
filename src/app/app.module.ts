@@ -10,13 +10,16 @@ import {
   MatInputModule,
   MatIconModule,
   MatSlideToggleModule,
-  MatCardModule
+  MatCardModule,
+  MatGridListModule
 } from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    FormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
@@ -25,7 +28,8 @@ import {
     MatInputModule,
     MatIconModule,
     MatSlideToggleModule,
-    MatCardModule
+    MatCardModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

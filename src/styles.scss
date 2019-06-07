@@ -7,3 +7,25 @@ body {
 .container {
   margin: 8px;
 }
+
+.price-card {
+  // max-width: 400px;
+  min-width: 90%;
+  text-align: center;
+}
+
+.price {
+  font-size: 30px;
+}
+
+.price-header {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.price-footer {
+  font-style: italic;
+  font-size: 11px;
+}
+
+
