@@ -17,4 +17,4 @@ script:
 
 after_success:
   - cd dist/taxas-enjoei/
-  - find . -type d \( -path "/dist/.*" -o -path "./node_modules" \) -prune -o -name "*" -print -exec curl --ftp-create-dirs -T {} ftp://ftp.moraisandre.com/taxaenjoei.moraisandre.com/ --user ${SFTP_USER}:${SFTP_PASSWORD} \;
+  - find . -type d \( -path "/.*" -o -path "./node_modules" \) -prune -o -name "*" -print -exec curl --ftp-create-dirs -T {} ftp://ftp.moraisandre.com/taxaenjoei.moraisandre.com/ --user ${SFTP_USER}:${SFTP_PASSWORD} \;
