@@ -48,8 +48,6 @@ export class AppComponent {
     this.percentProfit = this.profit / value;
     this.percentTax = this.tax / value;
     this.commissionPrice = this.getCommissionPrice();
-
-    this.errorMessage = '';
   }
 
   getFlatRate(value: number): number {
