@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AppComponent {
   enjoeiPro = false;
+  shippingInsurance = false;
 
   price: number;
   profit = 0;
@@ -17,6 +18,8 @@ export class AppComponent {
   commission = 0;
   commissionPrice = 0;
   flatRate = 0;
+  shipping = 0;
+  insurance = 0;
 
   constructor(private _snackBar: MatSnackBar) {}
 
@@ -43,8 +46,23 @@ export class AppComponent {
       this.flatRate = this.getFlatRate(value);
     }
 
-    this.profit = value - (value * this.commission) / 100 - this.flatRate;
-    this.tax = (value * this.commission) / 100 + this.flatRate;
+    if (this.shippingInsurance && this.price > 19) {
+      const insuranceTemp = (0.01 * this.price) - 0.195 + .49;
+      this.insurance = Math.floor(insuranceTemp * 100) / 100;
+    } else {
+      this.insurance = 0;
+    }
+
+    if (this.price >= 30 && this.price < 150) {
+      this.shipping = 5;
+    } else if (this.price >= 150) {
+      this.shipping = 10;
+    } else {
+      this.shipping = 0;
+    }
+
+    this.profit = value - (value * this.commission) / 100 - this.flatRate - this.shipping - this.insurance;
+    this.tax = (value * this.commission) / 100 + this.flatRate + this.shipping + this.insurance;
     this.percentProfit = this.profit / value;
     this.percentTax = this.tax / value;
     this.commissionPrice = this.getCommissionPrice();
