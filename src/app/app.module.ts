@@ -14,6 +14,7 @@ import {
   MatGridListModule,
   MatSnackBarModule,
   MatExpansionModule,
+  MatSelectModule,
   MatListModule
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
@@ -35,6 +36,7 @@ import { FormsModule } from '@angular/forms';
     MatGridListModule,
     MatSnackBarModule,
     MatExpansionModule,
+    MatSelectModule,
     MatListModule
   ],
   providers: [],

@@ -10,6 +10,15 @@ export class AppComponent {
   enjoeiPro = false;
   shippingInsurance = false;
 
+  publishPeriods = [
+      {id: 90, description: "até 90 dias", flatRate: 7.5},
+      {id: 91, description: "91 a 180 dias", flatRate: 10},
+      {id: 181, description: "181 a 360 dias", flatRate: 12.5},
+      {id: 360, description: "mais de 360 dias", flatRate: 50}
+    ];
+
+  selectedPublishPeriod = this.publishPeriods[0];
+
   price: number;
   profit = 0;
   tax = 0;
@@ -40,64 +49,52 @@ export class AppComponent {
 
     if (this.enjoeiPro) {
       this.commission = 50;
-      this.flatRate = this.getFlatRatePro(value);
+      this.flatRate = this.selectedPublishPeriod.flatRate;
     } else {
-      this.commission = value <= 100 ? 18.5 : 20;
+      this.commission = 18;
       this.flatRate = this.getFlatRate(value);
-    }
 
-    if (this.shippingInsurance && this.price > 19) {
-      const insuranceTemp = (0.01 * this.price) - 0.195 + .49;
-      this.insurance = Math.floor(insuranceTemp * 100) / 100;
-    } else {
-      this.insurance = 0;
-    }
+      if (this.shippingInsurance && this.commission > 23.5) {
+        this.insurance = ((this.commission - 23.5) * 0.015) + 1.49;
+      } else {
+        this.insurance = (23.5 * 0.015) + 1.49;
+      }
 
-    if (this.price >= 30 && this.price < 150) {
-      this.shipping = 5;
-    } else if (this.price >= 150) {
-      this.shipping = 10;
-    } else {
-      this.shipping = 0;
     }
 
     this.profit = value - (value * this.commission) / 100 - this.flatRate - this.shipping - this.insurance;
     this.tax = (value * this.commission) / 100 + this.flatRate + this.shipping + this.insurance;
+    
+    if (this.enjoeiPro && this.profit < 3) {
+      this.profit = 3;
+      this.tax = this.price - 3;
+    }
+
     this.percentProfit = this.profit / value;
     this.percentTax = this.tax / value;
     this.commissionPrice = this.getCommissionPrice();
   }
 
   getFlatRate(value: number): number {
-    if (value <= 50) {
-      return 1.9;
-    } else if (value > 50 && value <= 70) {
+    if (value <= 18) {
       return 3.5;
-    } else if (value > 70 && value <= 100) {
-      return 5;
-    } else if (value > 100 && value <= 150) {
-      return 6.5;
-    } else if (value > 150 && value <= 200) {
+    } else if (value > 15.01 && value <= 30) {
       return 7.5;
-    } else if (value > 200 && value <= 1500) {
-      return 13;
+    } else if (value > 30.01 && value <= 50) {
+      return 8.5;
+    } else if (value > 50.01 && value <= 70) {
+      return 10.5;
+    } else if (value > 70.01 && value <= 100) {
+      return 12.5;
+    } else if (value > 100.01 && value <= 150) {
+      return 16.5;
+    } else if (value > 150.01 && value <= 300) {
+      return 27.5;
+    } else if (value > 300.01 && value <= 500) {
+      return 45;
     }
 
-    return 0;
-  }
-
-  getFlatRatePro(value: number): number {
-    if (value <= 100) {
-      return 5;
-    } else if (value > 100 && value <= 150) {
-      return 6.5;
-    } else if (value > 150 && value <= 200) {
-      return 7.5;
-    } else if (value > 200 && value <= 1500) {
-      return 13;
-    }
-
-    return 0;
+    return 50;
   }
 
   getCommissionPrice(): number {

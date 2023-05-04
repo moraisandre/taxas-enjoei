@@ -9,3 +9,8 @@ Veja funcionando em: [taxaenjoei.moraisandre.com](http://taxaenjoei.moraisandre.
 ## Captura de Tela
 
 <img src="images/snapshot.png">
+
+## Parte técnica
+
+* Angular 8
+* Node version 14.21.3

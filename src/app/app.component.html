@@ -8,16 +8,26 @@
       Descubra o quanto você vai pagar de taxas para o Enjoei
     </mat-grid-tile>
     <mat-grid-tile>
-      <mat-form-field>
-        <input matInput color="accent" placeholder="Preço do Produto" [(ngModel)]="price" type="number">
-      </mat-form-field>
+      <mat-grid-list [gutterSize]="'10px'" cols="2" rowHeight="2:1">
+        <mat-form-field>
+          <input matInput color="accent" placeholder="Preço do Produto" [(ngModel)]="price" type="number">
+        </mat-form-field>
+        <mat-form-field *ngIf="enjoeiPro">
+          <mat-label>Tempo de publicação</mat-label>
+          <mat-select [(value)]="selectedPublishPeriod">
+            <mat-option *ngFor="let publishPeriod of publishPeriods" [value]="publishPeriod">
+              {{publishPeriod.description}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-list>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-slide-toggle class="toggle-enjoei-pro" color="primary" [(ngModel)]="enjoeiPro">
         Enjoei Pro
       </mat-slide-toggle>
-      <mat-slide-toggle class="toggle-enjoei-pro" color="primary" [(ngModel)]="shippingInsurance">
-        Seguro Extravio
+      <mat-slide-toggle *ngIf="!enjoeiPro" class="toggle-enjoei-pro" color="primary" [(ngModel)]="shippingInsurance">
+        Envio Protegido
       </mat-slide-toggle>
     </mat-grid-tile>
     <mat-grid-tile>
@@ -59,7 +69,7 @@
   </mat-grid-list>
   <div class="commission-text">
     {{commission}}% de comissão do produto ({{ commissionPrice | currency:'BRL'}}) + tarifa de
-    {{flatRate | currency:'BRL'}} + frete suavizator {{ shipping | currency:'BRL'}} + seguro contra extravio {{insurance | currency:'BRL'}}.
+    {{flatRate | currency:'BRL'}} + seguro de frete {{insurance | currency:'BRL'}}.
   </div>
   <mat-accordion class="expansion">
     <mat-expansion-panel>
@@ -75,27 +85,30 @@
       Tarifas
       <mat-list role="list">
         <mat-list-item role="listitem">
-          <h4 mat-line>Saque: R$ 1,50</h4>
-          <p mat-line>(para saques menores que R$ 200)</p>
+          <h4 mat-line>Saque</h4>
+          <p mat-line>no enjoei, você tem direito a 1 saque grátis por mês,</p>
+          <p mat-line>não cumulativo os meses seguintes.</p>
+          <p mat-line>a partir do segundo saque, é cobrado um valor de R$ 3,00 por transação.</p>
         </mat-list-item>
         <mat-list-item role="listitem">
-          <h4 mat-line>Manutenção: R$ 9,99 mensal</h4>
-          <p mat-line>(somente para contas com saldo)</p>
-          <p mat-line>(e sem movimentação há mais de 6 meses)</p>
+          <h4 mat-line>Tarifa de inatividade</h4>
+          <p mat-line>esta é uma tarifa mensal que começa a ser cobrada quando você completa 2 meses</p>
+          <p mat-line>sem movimentar seus créditos do enjubank.</p>
+          <p mat-line>de 2 a 6 meses sem movimentar o enjubank = R$ 14,99 ao mês</p>
+          <p mat-line>a partir de 6 meses sem movimentar o enjubank =	R$ 29,99 ao mês</p>
         </mat-list-item>
         <mat-list-item role="listitem">
-          <h4 mat-line>Frete Suavizator</h4>
-          <p mat-line>Produtos com valor entre R$ 30 e R$ 149</p>
-          <p mat-line>o enjoei cobra uma taxa de R$ 5</p>
-          <p mat-line>se o valor for maior que R$ 150</p>
-          <p mat-line>a coparticipação é de R$ 10.</p>
+          <h4 mat-line>Enjoei Pro</h4>
+          <p mat-line>o pagamento mínimo pela venda de uma peça é de R$ 3,00.</p>
+          <p mat-line>isso significa que independente do valor da comissão e da tarifa fixa aplicadas,</p>
+          <p mat-line>você nunca receberá menos que R$ 3,00 por uma peça vendida.</p>
         </mat-list-item>
         <mat-list-item role="listitem">
-          <h4 mat-line>Seguro Contra Extravio</h4>
-          <p mat-line>O custo desse serviço é correspondente</p>
-          <p mat-line>a 1% do valor da mercadoria negociada</p>
-          <p mat-line>reduzido em R$19,50 acrescentada</p>
-          <p mat-line>a taxa fixa de R$0,49.</p>
+          <h4 mat-line>Tarifa de saque</h4>
+          <p mat-line>no enjoei, você tem direito a 1 saque grátis por mês,</p>
+          <p mat-line>não cumulativo os meses seguintes.</p>
+          <p mat-line>a partir do segundo saque,</p>
+          <p mat-line>é cobrado um valor de R$ 3,00 por transação.</p>
         </mat-list-item>
       </mat-list>
     </mat-expansion-panel>
@@ -104,5 +117,5 @@
 
 <footer class="disclaimer">
   Os cálculos foram feitos com base na <a href="https://www.enjoei.com.br/taxas" target="_blank">tabela de taxas</a> do
-  site Enjoei.
+  site Enjoei. Atualizado pela ultima vez em 04/05/2021.
 </footer>
