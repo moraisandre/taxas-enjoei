@@ -21,37 +21,19 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [14.21.3]
+        node: [14.x]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
-      - name: Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-
-      # Runs npm i and test
-      - name: npm install and ng run test:ci
-        run: |
-          npm i
-          
-      - name: Coveralls GitHub Action
-        # You may pin to the exact commit or the version.
-        # uses: coverallsapp/github-action@8cbef1dea373ebce56de0a14c68d6267baa10b44
-        uses: coverallsapp/github-action@v1.1.2
-        with:
-          # 
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-      
-      # Runs npm build --prod
-      - name: npm run build
-        run: |
-          npm run build
-          
+          cache: 'npm'
+      - run: npm i
+      - run: npm run build
+        
       # Upload to FTP
       - name: ftp-action
         # You may pin to the exact commit or the version.
