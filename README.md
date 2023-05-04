@@ -13,4 +13,4 @@ Veja funcionando em: [taxaenjoei.moraisandre.com](http://taxaenjoei.moraisandre.
 ## Parte técnica
 
 * Angular 8
-* Node version 16.20.0
+* Node version 14.21.3
