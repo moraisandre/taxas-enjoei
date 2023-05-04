@@ -27,3 +27,19 @@ jobs:
         cache: 'npm'
     - run: npm i
     - run: npm run build
+    
+    # Upload to FTP
+    - name: ftp-action
+      # You may pin to the exact commit or the version.
+      # uses: sebastianpopp/ftp-action@eb75c5cb29d23ee4a729720a27dfb66403cb0f6d
+      uses: sebastianpopp/ftp-action@v2.0.0
+      with:
+        # FTP host
+        host: ${{ secrets.FTP_HOSTNAME }}
+        # FTP user
+        user: ${{ secrets.FTP_USER }}
+        # FTP password
+        password: ${{ secrets.FTP_PASSWORD }}
+        # Local directory
+        localDir: 'dist/taxas-enjoei'
+
